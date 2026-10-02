@@ -1,375 +1,628 @@
-# 🛒 ShopSphere Test Automation
+# Selenium Test Automation Framework
 
-> **A scalable Java-based test automation framework designed to validate critical e-commerce workflows through maintainable, reusable, and structured automated tests.**
+A scalable and maintainable **Selenium WebDriver automation framework** built using **Java, TestNG, Cucumber, Maven, and Page Object Model (POM)**.
 
-[![Java](https://img.shields.io/badge/Java-17%2B-orange?logo=openjdk)](https://www.java.com/)
-[![Maven](https://img.shields.io/badge/Maven-Build-red?logo=apachemaven)](https://maven.apache.org/)
-[![Selenium](https://img.shields.io/badge/Selenium-Web%20Automation-43B02A?logo=selenium)](https://www.selenium.dev/)
-[![TestNG](https://img.shields.io/badge/TestNG-Test%20Framework-FF6F00)](https://testng.org/)
-[![Git](https://img.shields.io/badge/Git-Version%20Control-F05032?logo=git)](https://git-scm.com/)
+The framework is designed to demonstrate practical SDET automation practices including reusable page components, data-driven testing, BDD, parallel execution, retry handling, failure screenshots, and HTML reporting.
 
 ---
 
-## 📌 Project Overview
+## 🚀 Tech Stack
 
-**ShopSphere Test Automation** is a Java-based test automation project created to demonstrate a structured approach to testing an e-commerce application.
-
-The framework focuses on building reusable automation components, organizing test scenarios into maintainable suites, generating execution reports, and following automation best practices that can be extended as application coverage grows.
-
-### 🎯 Objectives
-
-* Automate critical e-commerce user workflows
-* Build reusable and maintainable test components
-* Separate test logic from test data and configuration
-* Organize tests into executable suites
-* Generate execution reports for test analysis
-* Establish a foundation that can be extended for CI/CD execution
+* **Java 8**
+* **Selenium WebDriver 4.3.0**
+* **TestNG 6.14.3**
+* **Cucumber 7.5.0**
+* **Maven**
+* **WebDriverManager**
+* **Jackson Databind**
+* **Extent Reports**
+* **Git / GitHub**
 
 ---
 
-## ✨ Key Highlights
+## 🏗️ Framework Architecture
 
-| Area                  | Implementation                          |
-| --------------------- | --------------------------------------- |
-| 🧪 Test Automation    | Automated UI test scenarios             |
-| ☕ Language            | Java                                    |
-| 🌐 Browser Automation | Selenium WebDriver                      |
-| 🔬 Test Framework     | TestNG                                  |
-| 📦 Build Management   | Maven                                   |
-| 📊 Reporting          | Automated execution reports             |
-| 🗂️ Test Organization | Test suites and structured test classes |
-| 🔄 Maintainability    | Reusable automation components          |
-| 🛠️ Version Control   | Git                                     |
-
----
-
-## 🧪 Testing Scope
-
-The framework is designed around common e-commerce workflows such as:
-
-* 🔐 User authentication
-* 🛍️ Product navigation
-* 🔎 Product search
-* 📦 Product selection
-* 🛒 Cart operations
-* 💳 Checkout workflows
-* 📋 Order-related validations
-* ❌ Negative and validation scenarios
-
-> The test coverage can be expanded as additional application functionality is introduced.
-
----
-
-## 🏗️ Framework Structure
+The framework follows the **Page Object Model (POM)** to separate test logic from application-specific UI interactions.
 
 ```text
-ShopSphere-Test-Automation/
-│
-├── src/
-│   └── test/
-│       └── java/
-│           └── ...
-│
-├── testSuites/
-│   └── ...
-│
-├── reports/
-│   └── ...
-│
-├── test-output/
-│   └── ...
-│
-├── pom.xml
-├── .gitignore
-└── README.md
+                    ┌─────────────────────┐
+                    │   Test Execution    │
+                    │  TestNG / Cucumber  │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │    Test Classes     │
+                    │  & Step Definitions │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │     Page Objects    │
+                    │   UI Interactions   │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   Selenium WebDriver│
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   Web Application   │
+                    └─────────────────────┘
 ```
 
-### 📂 Directory Purpose
+---
 
-**`src/test/java`**
+## 📂 Project Structure
 
-Contains the Java automation code and test implementations.
-
-**`testSuites`**
-
-Contains TestNG suite configurations used to organize and execute selected groups of tests.
-
-**`reports`**
-
-Contains generated test execution reports.
-
-**`test-output`**
-
-Contains TestNG execution output and related test artifacts.
-
-**`pom.xml`**
-
-Defines project dependencies, build configuration, and Maven-based test execution.
+```text
+SeleniumFrameworkDesign/
+│
+├── pom.xml
+│
+├── reports/
+│   ├── index.html
+│   ├── LoginErrorValidation.png
+│   ├── ProductErrorValidation.png
+│   └── submitOrder.png
+│
+├── src/
+│   ├── main/
+│   │   └── java/
+│   │       └── rahulshettyacademy/
+│   │           │
+│   │           ├── AbstractComponents/
+│   │           │   └── AbstractComponent.java
+│   │           │
+│   │           ├── pageobjects/
+│   │           │   ├── LandingPage.java
+│   │           │   ├── ProductCatalogue.java
+│   │           │   ├── CartPage.java
+│   │           │   ├── CheckoutPage.java
+│   │           │   ├── ConfirmationPage.java
+│   │           │   └── OrderPage.java
+│   │           │
+│   │           └── resources/
+│   │               ├── ExtentReporterNG.java
+│   │               └── GlobalData.properties
+│   │
+│   └── test/
+│       └── java/
+│           │
+│           ├── cucumber/
+│           │   ├── SubmitOrder.feature
+│           │   ├── ErrorValidations.feature
+│           │   └── TestNGTestRunner.java
+│           │
+│           └── rahulshettyacademy/
+│               ├── data/
+│               │   ├── DataReader.java
+│               │   └── PurchaseOrder.json
+│               │
+│               ├── stepDefinitions/
+│               │   └── StepDefinitionImpl.java
+│               │
+│               ├── TestComponents/
+│               │   ├── BaseTest.java
+│               │   ├── Listeners.java
+│               │   └── Retry.java
+│               │
+│               └── tests/
+│                   ├── SubmitOrderTest.java
+│                   └── ErrorValidationsTest.java
+│
+├── testSuites/
+│   ├── testng.xml
+│   ├── Purchase.xml
+│   └── ErrorValidationTests.xml
+│
+└── target/
+```
 
 ---
 
-## ⚙️ Technology Stack
+# ✨ Key Features
 
-### ☕ Programming
+## 1. Page Object Model
 
-* Java
+The framework follows the **Page Object Model** design pattern.
 
-### 🌐 UI Automation
+Each application page has its own class containing:
 
-* Selenium WebDriver
+* Locators
+* Page-specific actions
+* Reusable methods
+* Page navigation
 
-### 🧪 Test Execution
+Example:
 
-* TestNG
+```java
+LandingPage
+    ↓
+ProductCatalogue
+    ↓
+CartPage
+    ↓
+CheckoutPage
+    ↓
+ConfirmationPage
+```
 
-### 📦 Build & Dependency Management
-
-* Maven
-
-### 🔧 Development Tools
-
-* Git
-* GitHub
-* Eclipse / IntelliJ IDEA
+This keeps test cases clean and improves framework maintainability.
 
 ---
 
-## 🚀 Getting Started
+## 2. Reusable Test Components
 
-### Prerequisites
+Common functionality is centralized in reusable components such as:
+
+* `BaseTest`
+* `AbstractComponent`
+* `Listeners`
+* `Retry`
+
+The `BaseTest` class handles common WebDriver initialization and test setup/teardown.
+
+---
+
+## 3. Data-Driven Testing
+
+Test data is externalized into JSON instead of hard-coding it inside test cases.
+
+```text
+PurchaseOrder.json
+```
+
+The framework uses **Jackson Databind** to read JSON test data.
+
+TestNG `DataProvider` is then used to execute the same test flow with different data.
+
+Example:
+
+```java
+@Test(dataProvider = "getData", groups = {"Purchase"})
+public void submitOrder(HashMap<String, String> input) {
+    // Test execution
+}
+```
+
+---
+
+## 4. TestNG Groups
+
+Tests are organized into logical groups.
+
+Examples:
+
+```text
+Purchase
+ErrorHandling
+```
+
+This allows specific categories of tests to be executed independently.
+
+---
+
+## 5. Retry Mechanism
+
+The framework includes a custom TestNG retry implementation.
+
+```java
+retryAnalyzer = Retry.class
+```
+
+This allows failed tests to be automatically retried based on the configured retry logic.
+
+---
+
+## 6. Failure Screenshot Capture
+
+The framework captures screenshots when a test fails.
+
+Screenshots are stored under:
+
+```text
+reports/
+```
+
+Example:
+
+```text
+LoginErrorValidation.png
+ProductErrorValidation.png
+submitOrder.png
+```
+
+The screenshots can also be attached to the Extent HTML report.
+
+---
+
+## 7. Extent Reports
+
+The framework uses **Extent Reports** for HTML-based test execution reporting.
+
+Report location:
+
+```text
+reports/index.html
+```
+
+The report provides visibility into:
+
+* Passed tests
+* Failed tests
+* Test execution details
+* Exceptions
+* Failure screenshots
+
+---
+
+## 8. Cucumber BDD
+
+The framework supports **Behavior Driven Development (BDD)** using Cucumber.
+
+Feature files:
+
+```text
+SubmitOrder.feature
+ErrorValidations.feature
+```
+
+The scenarios are implemented through step definitions in:
+
+```text
+StepDefinitionImpl.java
+```
+
+The Cucumber execution is handled by:
+
+```text
+TestNGTestRunner.java
+```
+
+---
+
+# 🧪 Test Scenarios
+
+## Positive Test Flow
+
+The framework automates an end-to-end purchase workflow:
+
+```text
+Login
+  ↓
+Select Product
+  ↓
+Add Product to Cart
+  ↓
+Validate Cart
+  ↓
+Proceed to Checkout
+  ↓
+Select Country
+  ↓
+Submit Order
+  ↓
+Validate Order Confirmation
+  ↓
+Validate Order History
+```
+
+---
+
+## Negative Test Scenarios
+
+The framework also validates application error handling.
+
+### Invalid Login
+
+Validates the application error message for incorrect credentials.
+
+Expected message:
+
+```text
+Incorrect email or password.
+```
+
+### Product Validation
+
+Validates product availability and expected product behavior during the purchase flow.
+
+---
+
+# ⚙️ Configuration
+
+Browser and framework configuration is maintained through:
+
+```text
+GlobalData.properties
+```
+
+The browser can also be provided through the command line.
+
+Example:
+
+```bash
+mvn test -Dbrowser=chrome
+```
+
+For headless Chrome:
+
+```bash
+mvn test -Dbrowser=chromeheadless
+```
+
+Firefox can be selected using:
+
+```bash
+mvn test -Dbrowser=firefox
+```
+
+---
+
+# ▶️ How to Run
+
+## Prerequisites
 
 Make sure the following are installed:
 
-* Java JDK
+* Java JDK 8+
 * Maven
 * Git
-* A supported web browser
-* IDE such as IntelliJ IDEA or Eclipse
+* Chrome / Firefox / Edge
+* IntelliJ IDEA / Eclipse / VS Code
 
-Verify the installations:
+Verify Java:
 
 ```bash
 java -version
+```
+
+Verify Maven:
+
+```bash
 mvn -version
-git --version
 ```
 
 ---
 
-## 📥 Clone the Repository
+## Clone the Repository
 
 ```bash
-git clone https://github.com/Kartikahalawat/ShopSphere-Test-Automation.git
+git clone <repository-url>
 ```
 
-Navigate into the project:
+Navigate to the project:
 
 ```bash
-cd ShopSphere-Test-Automation
-```
-
----
-
-## 📦 Install Dependencies
-
-Maven manages the project dependencies defined in `pom.xml`.
-
-```bash
-mvn clean install
+cd SeleniumFrameworkDesign
 ```
 
 ---
 
-## ▶️ Execute Tests
-
-Run the automated test suite using Maven:
+## Run All Tests
 
 ```bash
 mvn test
 ```
 
-You can also execute the required TestNG suite directly through your IDE or configured Maven/TestNG configuration.
+---
+
+## Run Regression Suite
+
+```bash
+mvn test -PRegression
+```
 
 ---
 
-## 📊 Test Reports
+## Run Purchase Tests
 
-After execution, generated artifacts are available under the project's reporting/output directories.
+```bash
+mvn test -PPurchase
+```
+
+---
+
+## Run Error Validation Tests
+
+```bash
+mvn test -PErrorValidation
+```
+
+---
+
+## Run Cucumber Tests
+
+```bash
+mvn test -PCucumberTests
+```
+
+---
+
+# 🔄 Test Execution Lifecycle
+
+```text
+@BeforeMethod
+      ↓
+Initialize WebDriver
+      ↓
+Load Configuration
+      ↓
+Launch Application
+      ↓
+Execute Test
+      ↓
+Test Passed?
+   ↙       ↘
+ YES       NO
+ ↓          ↓
+Report   Screenshot
+            ↓
+         Exception
+            ↓
+        Extent Report
+      ↓
+@AfterMethod
+      ↓
+Close Browser
+```
+
+---
+
+# 📊 Reporting
+
+After execution, the Extent report can be opened from:
+
+```text
+reports/index.html
+```
+
+Cucumber execution generates:
+
+```text
+target/cucumber.html
+```
+
+Failure screenshots are stored inside:
 
 ```text
 reports/
-test-output/
 ```
 
-These reports can be used to review:
+---
 
-* Passed tests
-* Failed tests
-* Skipped tests
-* Execution details
-* Test execution results
+# ⚡ Parallel Execution
+
+The framework supports TestNG parallel execution through the suite configuration.
+
+Example:
+
+```xml
+<suite parallel="tests" thread-count="5">
+```
+
+This provides the ability to execute independent test groups concurrently and can help reduce overall execution time.
+
+For larger-scale parallel execution, WebDriver isolation using `ThreadLocal<WebDriver>` can be introduced.
 
 ---
 
-## 🧩 Automation Design Principles
+# 🧩 Design Practices Used
 
-The framework is structured with maintainability and reusability in mind.
+The framework demonstrates the following automation engineering practices:
 
-### ♻️ Reusable Components
-
-Common automation operations should be centralized and reused instead of duplicating browser interaction logic across individual test cases.
-
-### 🧪 Independent Test Scenarios
-
-Tests should remain as independent as possible so that individual scenarios can be executed, debugged, and maintained without unnecessary dependencies.
-
-### 📋 Test Suite Organization
-
-TestNG suites provide a structured way to group related scenarios and control which tests are executed.
-
-### 📊 Execution Visibility
-
-Test reports and execution artifacts provide visibility into automation results and help identify failures during debugging.
+* Page Object Model
+* Separation of test and UI interaction logic
+* Reusable components
+* Centralized WebDriver setup
+* Externalized configuration
+* Data-driven testing
+* JSON-based test data
+* TestNG DataProvider
+* TestNG Groups
+* TestNG Listeners
+* Retry Analyzer
+* Cucumber BDD
+* Explicit waits
+* Failure screenshot capture
+* HTML reporting
+* Maven profiles
+* Parallel test execution
 
 ---
 
-## 🔄 Automation Workflow
+# 🔐 Test Data & Credentials
+
+The project uses demo application credentials for automation.
+
+For real-world projects, sensitive credentials should **not** be committed to source control.
+
+Recommended approach:
 
 ```text
-             ┌──────────────────────┐
-             │   Test Scenario      │
-             └──────────┬───────────┘
-                        │
-                        ▼
-             ┌──────────────────────┐
-             │    TestNG Suite      │
-             └──────────┬───────────┘
-                        │
-                        ▼
-             ┌──────────────────────┐
-             │ Selenium WebDriver   │
-             └──────────┬───────────┘
-                        │
-                        ▼
-             ┌──────────────────────┐
-             │  ShopSphere Web App  │
-             └──────────┬───────────┘
-                        │
-                        ▼
-             ┌──────────────────────┐
-             │ Assertions & Results │
-             └──────────┬───────────┘
-                        │
-                        ▼
-             ┌──────────────────────┐
-             │   Test Reports       │
-             └──────────────────────┘
+Environment Variables
+        ↓
+Configuration
+        ↓
+Test Framework
+        ↓
+Test Execution
 ```
 
----
+For production frameworks, credentials can be managed through:
 
-## 📈 Future Enhancements
-
-The framework can be further extended with additional automation capabilities:
-
-* 🔹 Page Object Model (POM)
-* 🔹 Data-driven testing
-* 🔹 Cross-browser execution
-* 🔹 Parallel test execution
-* 🔹 Parameterized TestNG tests
-* 🔹 API automation with REST Assured
-* 🔹 Advanced HTML reporting
-* 🔹 Jenkins CI/CD integration
-* 🔹 Dockerized test execution
-* 🔹 Screenshot capture on failures
-* 🔹 Environment-specific configuration
-* 🔹 Playwright-based automation
+* Environment variables
+* CI/CD secrets
+* Secret management platforms
+* Encrypted configuration
 
 ---
 
-## 🧪 Example Test Execution
+# 📈 Possible Future Enhancements
 
-A typical automation flow follows:
+The framework can be further extended with:
+
+* Selenium Grid
+* Docker-based execution
+* Jenkins / GitHub Actions CI/CD
+* Cross-browser execution
+* Thread-safe WebDriver management
+* API automation using REST Assured
+* Allure reporting
+* Log4j2 / SLF4J logging
+* Video recording for failed tests
+* Environment-specific configuration
+* Parallel DataProvider execution
+* Cloud execution using BrowserStack / LambdaTest
+* Automated test execution through CI/CD pipelines
+
+---
+
+# 🎯 Framework Highlights
+
+This project demonstrates practical **SDET / Test Automation Engineering** concepts:
 
 ```text
-Launch Browser
-      ↓
-Navigate to Application
-      ↓
-Perform User Action
-      ↓
-Validate Expected Result
-      ↓
-Capture Test Result
-      ↓
-Generate Report
+Java
+  +
+Selenium WebDriver
+  +
+Page Object Model
+  +
+TestNG
+  +
+Cucumber
+  +
+Data-Driven Testing
+  +
+Maven
+  +
+Retry & Listeners
+  +
+Failure Screenshots
+  +
+Extent Reports
 ```
 
----
-
-## 📚 What This Project Demonstrates
-
-This project demonstrates practical experience with:
-
-* Selenium WebDriver automation
-* Java-based test development
-* TestNG test execution
-* Maven project management
-* Test suite organization
-* Automated validation
-* Test reporting
-* Reusable automation design
-* Git-based project management
+The framework is designed with a focus on **reusability, maintainability, scalability, and clean separation of test responsibilities**.
 
 ---
 
-## 🤝 Contributing
+# 👨‍💻 Author
 
-Contributions and suggestions are welcome.
+## Kartik Ahalawat
 
-1. Fork the repository
-2. Create a feature branch
+**SDET / Test Automation Engineer**
 
-```bash
-git checkout -b feature/new-test-scenario
-```
-
-3. Commit your changes
-
-```bash
-git commit -m "Add new automation scenario"
-```
-
-4. Push the branch
-
-```bash
-git push origin feature/new-test-scenario
-```
-
-5. Open a Pull Request
+**Java | Selenium | Playwright | API Testing | SQL | CI/CD**
 
 ---
 
-## 👨‍💻 Author
+## 📄 License
 
-### Kartik Ahalawat
+This project is created for **learning, portfolio demonstration, and test automation practice**.
 
-**SDET | Quality Engineering & Test Automation | Java | Selenium | Playwright | API Testing**
-
-🔗 **GitHub:**
-https://github.com/Kartikahalawat
-
----
-
-## ⭐ Support
-
-If you find this project useful for learning or exploring test automation, consider giving the repository a ⭐.
-
----
-
-### 📌 Project Status
-
-**Active Development 🚀**
-
-The framework is being continuously enhanced with additional automation patterns, test coverage, and modern testing practices.
-
+If you reuse this framework, update the application URL, test data, credentials, and project-specific configuration accordingly.
